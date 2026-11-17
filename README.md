@@ -6,7 +6,7 @@
 
 ## 功能
 
-- 原創響應式首頁與四個教學模組：絕對值、算幾不等式、斜率、二次式。
+- 原創響應式首頁提供五個教學模組，涵蓋絕對值、算幾不等式、斜率、二次式與等差數列。
 - 依單元分類篩選，選擇解題方向後提供對應回饋。
 - 分段提示、解答、反思及延伸問題。
 - 已完成狀態保存在瀏覽器內，不需登入。
@@ -20,7 +20,7 @@
 python -m http.server 8000
 ```
 
-瀏覽 `http://localhost:8000`。也可使用 VS Code Live Server。
+在專案根目錄執行上方指令後，瀏覽 `http://localhost:8000/`。`npm run start` 會呼叫同一個 Python 指令，也可使用 VS Code Live Server。
 
 ## 自動驗證
 
@@ -30,23 +30,30 @@ python -m http.server 8000
 npm run check
 ```
 
-此檢查涵蓋 Schema、重複 ID、正確選項、存在的入口檔案、頁面中的相對資源引用。**數學正確性、實際視覺和完整互動仍需人工或瀏覽器驗收**。
+也可直接執行 `node scripts/validate.mjs`。腳本檢查單元 Schema、ID 與編號的唯一性、策略數量、正確選項及必要檔案。首頁路徑檢查會確認 `index.html` 包含預期的 CSS 與 JavaScript 相對路徑，並攔截以單一 `/` 開頭的 `src` 或 `href` 值。**數學正確性、實際視覺和完整互動仍需人工或瀏覽器驗收**。
 
 ## 專案結構
 
 ```text
 first-move/
+├── .gitignore
 ├── AGENTS.md
 ├── README.md
 ├── index.html
-├── css/style.css
-├── js/app.js
-├── js/lesson.js
-├── data/lessons.js
-├── scripts/validate.mjs
 ├── package.json
-└── .gitignore
+├── assets/               # 本機空目錄，網站未使用
+├── css/
+│   └── style.css
+├── data/
+│   └── lessons.js
+├── js/
+│   ├── app.js
+│   └── lesson.js
+└── scripts/
+    └── validate.mjs
 ```
+
+GitHub 儲存庫另保留早期上傳在根目錄的檔案，包括 `app.js`、`lesson.js`、`lessons.js`、`style.css`、`validate.mjs` 和 `download`。網站與驗證腳本使用上方目錄樹的路徑。
 
 ## 如何新增一題
 
@@ -64,12 +71,14 @@ first-move/
 
 ## 部署至 GitHub Pages
 
+網站已部署至 GitHub Pages。以下以在另一個 Repository 從 `main` 分支的 `/(root)` 部署為例。
+
 1. 在 GitHub 建立公開 Repository：例如 `first-move`。
-2. 將本資料夾全部檔案推送到 Repository 的 `main` 分支。
+2. 將專案檔案推送到 Repository 的 `main` 分支。
 3. 前往 **Settings → Pages**，在 **Build and deployment** 選擇 **Deploy from a branch**，指定 `main` 和 `/(root)`，儲存。
 4. 等 GitHub Pages 顯示成功部署後，前往 `https://<your-username>.github.io/first-move/` 確認。
 
-請依實際 Repository 名稱和帳號替換網址；本專案沒有預先假設已經部署成功。
+請依實際帳號與 Repository 名稱替換示例網址。`index.html` 透過 `./css/style.css` 和 `./js/app.js` 載入樣式與入口模組，`js/app.js` 再透過 `./lesson.js` 和 `../data/lessons.js` 載入互動模組及單元資料。這些相對路徑在 `/first-move/` 等專案子路徑下皆可解析。
 
 ## 原創性與適用範圍
 

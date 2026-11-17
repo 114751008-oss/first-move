@@ -9,7 +9,7 @@ FIRST MOVE（第一個突破口）是給台灣高中生的數學思維實驗室�
 ## 2. 技術與限制
 
 - 靜態 GitHub Pages 網站：HTML5、CSS3、Vanilla JavaScript ES Modules；不需要後端、帳號、API Key、付費外掛或打包工具。
-- 所有本地連結與資源引用使用相對路徑（例如 `./css/style.css`、`../data/lessons.js`），確保 `/first-move/` 等 GitHub Pages 子路徑也可運作。
+- 所有本地連結與資源引用使用相對路徑，確保 `/first-move/` 等 GitHub Pages 子路徑也可運作。`index.html` 引用 `./css/style.css` 和 `./js/app.js`，`js/app.js` 匯入 `./lesson.js` 和 `../data/lessons.js`。
 - 不修改不相關檔案；不任意更換框架或引進相依套件。
 - 不儲存學生個資。完成紀錄只保存在使用者瀏覽器 localStorage，失效時網站仍能使用。
 
@@ -17,15 +17,21 @@ FIRST MOVE（第一個突破口）是給台灣高中生的數學思維實驗室�
 
 ```text
 first-move/
-├── AGENTS.md                  # AI 規則（此檔）
-├── README.md                  # 開發、驗證與部署說明
-├── index.html                 # 語意結構、SEO 與頁面容器
-├── css/style.css              # 共用設計系統與響應式樣式
-├── js/app.js                  # 課程列表、篩選與完成紀錄
-├── js/lesson.js               # 五階段互動引擎
-├── data/lessons.js            # 單一內容資料來源
-├── scripts/validate.mjs      # 可執行資料與路徑檢查
-└── package.json              # npm run check
+├── .gitignore            # Git 忽略規則
+├── AGENTS.md             # AI 規則（此檔）
+├── README.md             # 開發、驗證與部署說明
+├── index.html            # 語意結構、SEO 與頁面容器
+├── package.json          # npm run check 與 npm run start
+├── assets/               # 本機空目錄，網站未使用
+├── css/
+│   └── style.css         # 共用設計系統與響應式樣式
+├── data/
+│   └── lessons.js        # 單一內容資料來源
+├── js/
+│   ├── app.js            # 課程列表、篩選與完成紀錄
+│   └── lesson.js         # 五階段互動引擎
+└── scripts/
+    └── validate.mjs      # 單元資料、必要檔案與首頁資源路徑檢查
 ```
 
 ## 4. 視覺與體驗規則
@@ -89,7 +95,7 @@ first-move/
 
 ## 9. 可執行驗證與停止條件
 
-執行 `npm run check`，檢查欄位、資料型別、ID 與編號唯一性、策略數量、正確選項、入口檔案及相對路徑。
+執行 `npm run check`，也可直接執行 `node scripts/validate.mjs`。腳本檢查單元欄位、型別、ID 與編號的唯一性、策略數量、正確選項及必要檔案。首頁路徑檢查會確認 `index.html` 包含預期的 CSS 與 JavaScript 相對路徑，並攔截以單一 `/` 開頭的 `src` 或 `href` 值。
 
 修復循環：讀取具體錯誤 → 最小幅度修正 → 重跑測試，最多三輪。三輪仍失敗，停止並回報，不得宣稱完成。遇到來源不足、數學條件矛盾、資料刪除風險、外部帳號授權或未授權素材，也必須停止並請人確認。
 
