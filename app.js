@@ -1,4 +1,4 @@
-import { lessons } from '../data/lessons.js';
+import { lessons } from './lessons.js';
 import { openLesson } from './lesson.js';
 const grid = document.querySelector('#lesson-grid');
 const filters = document.querySelector('#filters');
